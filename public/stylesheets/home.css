@@ -55,9 +55,11 @@ user-select: none;
 touch-action: manipulation;
 }
 
-button:hover,
-button:focus {
+button:hover {
     background-color: #F082AC;
 }
 
+form{
+    margin-bottom: 40px;
+}
 

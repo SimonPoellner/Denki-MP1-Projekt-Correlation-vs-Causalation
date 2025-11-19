@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="stylesheets/home.css">
+    <title>Quiz</title>
+</head>
+<body>
+<div class="navbar">
+    <h1>Correlation vs Causalation</h1>
+</div>
+<div class="text">
+    <h2 id="question_text">Korrelation und Kausalität – das komplizierte Verhältnis</h2>
+
+    <form>
+        <input type="radio" id="a0" name="input" value="0">
+        <label for="i1">Correlation</label><br>
+
+        <input type="radio" id="a1" name="input" value="1">
+        <label for="i2">Kausalation</label><br>
+
+        <input type="radio" id="a2" name="input" value="2" checked>
+        <label for="i3">Ausgedacht</label>
+    </form>
+
+    <p id="answer"></p>
+
+    <button id="buttonPrevious" onclick="clickPrevious()"><</button>
+    <button id="buttonNext" onclick="clickNext()">></button>
+    <button id="buttonCheck" onclick="clickCheck()">Check</button>
+
+</div>
+
+
+</body>
+</html>
+
+<script>
+    const questionParagraph =  document.getElementById('question_text');
+    const answerParagraph =  document.getElementById('answer');
+
+
+    //["Question", "Anwser", selected Number]
+    const questionArray = [
+
+    ["Mehr Eisverkauf → mehr Autounfälle", "Korrelation: Wenn man beobachtet, dass an heißen Tagen mehr Eis verkauft wird und gleichzeitig mehr Autounfälle passieren, könnte man fälschlich schließen, dass Eisessen Unfälle verursacht. Tatsächlich ist beides durch die dritte Variable “Hitze / Sommerwetter” bedingt.", 2],
+    ["Viele Störche in einer Region → hohe Geburtenrate","Korrelation: In manchen Statistiken korreliert die Anzahl von Storchenpaaren mit der Geburtenrate. Das kann für Laien so wirken, als ob Störche Babys „bringen“. Tatsächlich ist das ein klassisches Beispiel für eine Scheinkorrelation: Beide Variablen hängen mit einer dritten zusammen (z. B. ländliche Regionen mit stabilen Lebensbedingungen) – nicht weil Störche Kinder verursachen.",2],
+    ["Mehr Bibliothekszeit → bessere Schulnoten","Korrelation: Man könnte vermuten, dass Studierende, die mehr Zeit in der Bibliothek verbringen, automatisch bessere Noten haben, weil das „Fleiß“ verursacht, dass sie lernen und dadurch bessere Leistungen liefern. Aber hier könnte eine verborgene Variable wie Motivation, Vorwissen oder soziales Umfeld verantwortlich sein – Menschen, die ohnehin ehrgeizig sind, verbringen mehr Zeit in der Bibliothek und erzielen bessere Noten.",2],
+    ["Feuerwehreinsätze und Brände","Korrelation: Wenn man beobachtet, dass immer dort viele Feuerwehrleute sind, wo Brände sind, könnte man oberflächlich denken, dass die Feuerwehr die Brände verursacht – eine absurde Schlussfolgerung, aber logisch, wenn man Korrelation mit Kausalität verwechselt. Tatsächlich ist die Feuerwehr Reaktion, nicht Ursache: Sie geht zu Bränden, nicht dass Brände durch Feuerwehr entstehen.",2],
+    ["Je mehr Schüler Musikunterricht nehmen, desto mehr Schüler brechen Sportvereine ab – Musik verdrängt Sport.","Korrelation: Fehler: Musikunterricht kommt häufiger in Schulen mit großem Kulturangebot vor, die parallel auch viele Sportvereinsangebote haben → dort ist die Gesamtaktivität schon höher.Rückgang im Sport kann andere Gründe haben (Zeitdruck, Schulstruktur).",2],
+    ["Blaulicht am Abend verschlechtert den Schlaf","Falsch, das Gegenteil: Viele denken, es sei nur „unangenehm hell“. In Wirklichkeit hemmt Blaulicht wissenschaftlich nachweisbar die Ausschüttung von Melatonin. Quelle: Harvard Medical School https://www.health.harvard.edu/staying-healthy/blue-light-has-a-dark-side",2],
+    ["Ein leicht unordentlicher Arbeitsplatz fördert kreatives Denken","Kausal: Überraschend: Zwar macht Ordnung Menschen konformer, aber Unordnung regt kreatives, abweichendes Denken an. Experimentell kausal bestätigt. Quelle: Psychological Science https://journals.sagepub.com/doi/10.1177/0956797613480186",2],
+    ["Wer früh täglich Fensterlüften oder gute Belüftung im Innenraum nutzt, hat geringeres Risiko für Atemwegs- und Herz-Kreislauf Erkrankungen.","Kausal: → Studien zeigen: gute Belüftung reduziert Feinstaub, CO₂, Formaldehyd u. a., und damit das Risiko für Herz/Kreislauf und Atemwege. https://www.enterprisecommunity.org/news/new-study-finds-ventilation-significantly-reduces-indoor-pollutant-levels",2],
+    ["Wer täglich etwa 30 g Nüsse/Samen isst, hat ein deutlich geringeres Risiko für Herz-Kreislauf-Erkrankungen.","Kausal: Metaanalysen zeigen: „Nuss-Konsum“ korreliert mit geringerer Sterblichkeit durch CVD, geringerer Herzkrankheits-Inzidenz. https://pubmed.ncbi.nlm.nih.gov/36816545/",2],
+    ["Wer früh im Leben mit einem Hund aufwächst, hat ein geringeres Risiko, später Allergien oder Asthma zu entwickeln.","Kausal: Studien zeigen: Exposition gegenüber Hund-Allergenen im Haushalt ist mit niedrigerem Risiko für Asthma oder Allergien verbunden. https://www.ersnet.org/news-and-features/news/babies-who-grow-up-around-dogs-may-have-a-lower-risk-of-developing-childhood-asthma-no-protective-effect-found-for-living-with-cats/",2]
+
+    ];
+
+
+    questionParagraph.textContent = questionArray[0][0];
+
+    let counter = 0;
+
+    function clickNext() {
+        counter++;
+        if(counter < questionArray.length) {
+            questionParagraph.textContent = questionArray[counter][0];
+            answerParagraph.textContent = "";
+        } else {
+            counter--;
+        }
+    }
+    function clickPrevious() {
+        counter--;
+        if(counter >= 0) {
+            questionParagraph.textContent = questionArray[counter][0];
+            answerParagraph.textContent = "";
+        } else {
+            counter++;
+        }
+    }
+    function clickCheck() {
+        answerParagraph.textContent = questionArray[counter][1];
+
+    }
+</script>
