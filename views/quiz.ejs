@@ -14,13 +14,13 @@
 
     <form>
         <input type="radio" id="a0" name="input" value="0">
-        <label for="i1">Correlation</label><br>
+        <label for="a0">Correlation</label><br>
 
         <input type="radio" id="a1" name="input" value="1">
-        <label for="i2">Kausalation</label><br>
+        <label for="a1">Kausalation</label><br>
 
         <input type="radio" id="a2" name="input" value="2" checked>
-        <label for="i3">Ausgedacht</label>
+        <label for="a2">Ausgedacht</label>
     </form>
 
     <p id="answer"></p>
@@ -29,6 +29,7 @@
     <button id="buttonNext" onclick="clickNext()">></button>
     <button id="buttonCheck" onclick="clickCheck()">Check</button>
 
+    <p id="pageCounter"></p>
 </div>
 
 
@@ -39,6 +40,11 @@
     const questionParagraph =  document.getElementById('question_text');
     const answerParagraph =  document.getElementById('answer');
 
+    const selection0 =  document.getElementById('a0');
+    const selection1 =  document.getElementById('a1');
+    const selection2 =  document.getElementById('a2');
+
+    const pageCounter = document.getElementById('pageCounter');
 
     //["Question", "Anwser", selected Number]
     const questionArray = [
@@ -61,20 +67,68 @@
 
     let counter = 0;
 
+    //first load Counter
+    pageCounter.textContent = (counter + 1) + "/" + questionArray.length;
+
     function clickNext() {
         counter++;
         if(counter < questionArray.length) {
             questionParagraph.textContent = questionArray[counter][0];
             answerParagraph.textContent = "";
+            pageCounter.textContent = (counter + 1) + "/" + questionArray.length;
+
+            //store answer
+            if(counter - 1 >= 0){
+                questionArray[counter-1][2] = selection0.checked ? 0 : questionArray[counter-1][2];
+                questionArray[counter-1][2] = selection1.checked ? 1 : questionArray[counter-1][2];
+                questionArray[counter-1][2] = selection2.checked ? 2 : questionArray[counter-1][2];
+            }
+
+            //set answer
+            switch (questionArray[counter][2]){
+                case 0:
+                    selection0.checked = true;
+                    break;
+                case 1:
+                    selection1.checked = true;
+                    break;
+                case 2:
+                    selection2.checked = true;
+                    break;
+            }
+
         } else {
             counter--;
         }
     }
     function clickPrevious() {
         counter--;
+
         if(counter >= 0) {
             questionParagraph.textContent = questionArray[counter][0];
             answerParagraph.textContent = "";
+            pageCounter.textContent = (counter + 1) + "/" + questionArray.length;
+
+            //store answer
+            if(counter + 1 < questionArray.length){
+                questionArray[counter+1][2] = selection0.checked ? 0 : questionArray[counter+1][2];
+                questionArray[counter+1][2] = selection1.checked ? 1 : questionArray[counter+1][2];
+                questionArray[counter+1][2] = selection2.checked ? 2 : questionArray[counter+1][2];
+            }
+
+            //set answer
+            switch (questionArray[counter][2]){
+                case 0:
+                    selection0.checked = true;
+                    break;
+                case 1:
+                    selection1.checked = true;
+                    break;
+                case 2:
+                    selection2.checked = true;
+                    break;
+            }
+
         } else {
             counter++;
         }
